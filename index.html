@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101018">
+  <meta name="description" content="Official installation and launcher patch instructions for The Mighty Quest for Epic Loot Reborn community server.">
+  <title>Install Guide — The Mighty Quest Reborn</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0d0e15;
+      --panel: #171923;
+      --panel-2: #1d2030;
+      --line: rgba(255,255,255,.10);
+      --text: #f3f0e8;
+      --muted: #b5b2bd;
+      --gold: #e8b95e;
+      --gold-2: #f5d58d;
+      --blue: #91baff;
+      --green: #91d6ad;
+      --red: #f3a2a2;
+      --radius: 18px;
+      --max: 1080px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background:
+        radial-gradient(ellipse at 50% -15%, rgba(143,105,54,.24), transparent 46%),
+        linear-gradient(180deg, #12131d 0%, var(--bg) 440px);
+      color: var(--text);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.62;
+    }
+    a { color: var(--gold-2); text-underline-offset: 3px; }
+    a:hover { color: #fff0c8; }
+    .wrap { width: min(var(--max), calc(100% - 36px)); margin: 0 auto; }
+    .topbar {
+      border-bottom: 1px solid var(--line);
+      background: rgba(11,12,18,.72);
+      backdrop-filter: blur(12px);
+    }
+    .topbar-inner { min-height: 66px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .brand { display: flex; align-items: center; gap: 12px; color: var(--text); text-decoration: none; font-weight: 750; letter-spacing: .01em; }
+    .crest {
+      width: 36px; height: 36px; display: grid; place-items: center; border-radius: 11px;
+      color: #21180b; background: linear-gradient(145deg, var(--gold-2), #b37b31); font-size: 19px;
+      box-shadow: 0 5px 24px rgba(214,160,71,.22);
+    }
+    nav { display: flex; align-items: center; gap: 22px; }
+    nav a { color: var(--muted); text-decoration: none; font-size: .92rem; }
+    nav a:hover { color: var(--text); }
+    .hero { padding: 78px 0 48px; text-align: center; }
+    .eyebrow { color: var(--gold); text-transform: uppercase; letter-spacing: .19em; font-size: .76rem; font-weight: 800; }
+    h1 { margin: 14px 0 12px; font-family: Georgia, "Times New Roman", serif; font-size: clamp(2.45rem, 6vw, 4.6rem); line-height: 1.04; letter-spacing: -.035em; }
+    .hero p { max-width: 690px; margin: 0 auto; color: var(--muted); font-size: 1.08rem; }
+    .hero-actions { margin-top: 28px; display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 46px;
+      padding: 11px 18px; border: 1px solid rgba(232,185,94,.45); border-radius: 12px;
+      background: linear-gradient(135deg, #e8bd6d, #bd873b); color: #1d160c; font-weight: 800;
+      text-decoration: none; cursor: pointer; font: inherit; font-size: .95rem;
+      transition: transform .15s ease, filter .15s ease;
+    }
+    .btn:hover { color: #17120b; filter: brightness(1.08); transform: translateY(-1px); }
+    .btn.secondary { color: var(--text); background: var(--panel-2); border-color: var(--line); }
+    .btn.secondary:hover { color: #fff; }
+    .trust-strip {
+      display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 10px 24px;
+      margin: 0 auto 38px; padding: 14px 18px; width: fit-content; max-width: 100%;
+      border: 1px solid var(--line); border-radius: 999px; background: rgba(255,255,255,.035);
+      color: var(--muted); font-size: .86rem;
+    }
+    .trust-strip span { display: inline-flex; align-items: center; gap: 7px; }
+    .dot { color: var(--green); font-size: 1rem; }
+    main { padding-bottom: 70px; }
+    .section { margin: 28px 0; }
+    .section-head { margin: 0 0 16px; }
+    .section-head h2 { margin: 0 0 5px; font-family: Georgia, "Times New Roman", serif; font-size: clamp(1.7rem, 3vw, 2.2rem); }
+    .section-head p { margin: 0; color: var(--muted); }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 16px; }
+    .card { border: 1px solid var(--line); border-radius: var(--radius); background: linear-gradient(155deg, rgba(29,32,48,.96), rgba(20,22,32,.96)); padding: 23px; box-shadow: 0 14px 40px rgba(0,0,0,.15); }
+    .card h3 { margin: 0 0 8px; font-size: 1.2rem; }
+    .card p { color: var(--muted); margin: 0 0 14px; }
+    .download-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 13px 0; border-top: 1px solid var(--line); }
+    .download-row:first-of-type { margin-top: 14px; }
+    .file-name { font-weight: 750; overflow-wrap: anywhere; }
+    .file-meta { display: block; color: var(--muted); font-size: .82rem; font-weight: 400; }
+    .download-row .btn { flex-shrink: 0; min-height: 39px; padding: 8px 12px; font-size: .87rem; }
+    .notice { border: 1px solid rgba(232,185,94,.27); border-left: 4px solid var(--gold); background: rgba(232,185,94,.075); border-radius: 13px; padding: 16px 18px; color: #e9dfcc; }
+    .notice strong { color: var(--gold-2); }
+    .warning { border-color: rgba(243,162,162,.28); border-left-color: var(--red); background: rgba(243,162,162,.065); }
+    .warning strong { color: #ffc0c0; }
+    .steps { display: grid; gap: 12px; counter-reset: step; }
+    .step { display: grid; grid-template-columns: 38px 1fr; gap: 14px; padding: 17px; border: 1px solid var(--line); border-radius: 15px; background: rgba(255,255,255,.025); }
+    .step::before { counter-increment: step; content: counter(step); width: 34px; height: 34px; display: grid; place-items: center; border-radius: 50%; background: rgba(232,185,94,.15); color: var(--gold-2); font-weight: 850; }
+    .step h3 { margin: 0 0 3px; font-size: 1.02rem; }
+    .step p { margin: 0; color: var(--muted); }
+    code, .path { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .9em; overflow-wrap: anywhere; }
+    code { background: rgba(0,0,0,.28); padding: 2px 6px; border-radius: 6px; color: #f5dca6; }
+    .path-box { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 13px; background: rgba(0,0,0,.23); border: 1px solid var(--line); border-radius: 11px; margin-top: 9px; }
+    .path-box .path { color: #e7e2d7; }
+    .copy { border: 1px solid var(--line); border-radius: 8px; padding: 6px 9px; flex-shrink: 0; background: #25283a; color: var(--text); cursor: pointer; font: inherit; font-size: .8rem; }
+    .copy:hover { border-color: var(--gold); }
+    .patch-notes { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 13px; }
+    .stat { border: 1px solid var(--line); border-radius: 15px; background: rgba(255,255,255,.03); padding: 18px; }
+    .stat .big { color: var(--gold-2); font: 800 1.65rem Georgia, serif; }
+    .stat p { margin: 5px 0 0; color: var(--muted); font-size: .92rem; }
+    details { border: 1px solid var(--line); border-radius: 13px; background: rgba(255,255,255,.025); padding: 14px 17px; }
+    details + details { margin-top: 9px; }
+    summary { cursor: pointer; font-weight: 750; }
+    details p { color: var(--muted); margin: 10px 0 0; }
+    footer { border-top: 1px solid var(--line); padding: 25px 0 35px; color: #8f8d98; font-size: .84rem; }
+    footer .foot-inner { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px 24px; }
+    .small { color: var(--muted); font-size: .85rem; }
+    @media (max-width: 760px) {
+      nav { gap: 12px; } nav a { font-size: .82rem; }
+      .hero { padding: 58px 0 38px; }
+      .grid { grid-template-columns: 1fr; }
+      .patch-notes { grid-template-columns: 1fr; }
+      .trust-strip { border-radius: 15px; }
+    }
+    @media (max-width: 470px) {
+      .wrap { width: min(var(--max), calc(100% - 24px)); }
+      .topbar-inner { min-height: 58px; }
+      .brand { font-size: .88rem; }
+      nav a:nth-child(2) { display: none; }
+      .card { padding: 18px; }
+      .download-row { align-items: flex-start; flex-direction: column; }
+      .path-box { align-items: flex-start; flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <a class="brand" href="#top" aria-label="The Mighty Quest Reborn home">
+        <span class="crest" aria-hidden="true">♜</span>
+        <span>The Mighty Quest <span style="color:var(--gold)">Reborn</span></span>
+      </a>
+      <nav aria-label="Main navigation">
+        <a href="#downloads">Downloads</a>
+        <a href="#install">Installation</a>
+        <a href="#updates">Patch notes</a>
+      </nav>
+    </div>
+  </header>
+
+  <div id="top" class="wrap">
+    <section class="hero">
+      <div class="eyebrow">Community server · Installation guide</div>
+      <h1>Return to the Kingdom</h1>
+      <p>Use this guide to update the original Steam client and connect to The Mighty Quest for Epic Loot Reborn. Follow the steps in order and only use files linked from this website.</p>
+      <div class="hero-actions">
+        <a class="btn" href="#downloads">Get the official files <span aria-hidden="true">↓</span></a>
+        <a class="btn secondary" href="#install">Read installation steps</a>
+      </div>
+    </section>
+
+    <div class="trust-strip" aria-label="Site safety reminders">
+      <span><b class="dot">●</b> Official guide: themightyquest-reborn.com</span>
+      <span>◆ No third-party mirrors</span>
+      <span>◆ Original Steam client</span>
+    </div>
+  </div>
+
+  <main class="wrap">
+    <section id="downloads" class="section">
+      <div class="section-head">
+        <h2>Official files</h2>
+        <p>Download only from this page. These links are intended to point to files hosted on this same domain.</p>
+      </div>
+      <div class="grid">
+        <article class="card">
+          <h3>Launcher files</h3>
+          <p>Required for a fresh installation. Existing players may only need the settings file, unless the maintainer asks them to replace the launcher too.</p>
+          <div class="download-row">
+            <div><span class="file-name">PublicLauncher.exe</span><span class="file-meta">Place inside the game's <code>Launcher</code> folder</span></div>
+            <a class="btn" href="/downloads/PublicLauncher.exe" download>Download EXE</a>
+          </div>
+          <div class="download-row">
+            <div><span class="file-name">steam-launcher-patch.cmd</span><span class="file-meta">Place in the main game folder</span></div>
+            <a class="btn" href="/downloads/steam-launcher-patch.cmd" download>Download CMD</a>
+          </div>
+        </article>
+        <article class="card">
+          <h3>Launcher settings</h3>
+          <p>This creates the current <code>PublicLauncherSettings.json</code> using the server addresses supplied by the maintainer.</p>
+          <div class="notice" style="margin: 14px 0 17px"><strong>Important:</strong> Replace the existing settings file when instructed. Do not edit the server URLs or use a settings file sent through an unrelated DM.</div>
+          <button class="btn" id="download-settings" type="button">Download PublicLauncherSettings.json</button>
+          <p class="small" style="margin:11px 0 0">The generated file is valid JSON and has no trailing comma.</p>
+        </article>
+      </div>
+      <div class="notice warning" style="margin-top:16px">
+        <strong>Download safety:</strong> Never run a launcher or <code>.cmd</code> file from a random Discord message, direct message, shortened URL, or unofficial mirror. If a download link does not point to <code>https://www.themightyquest-reborn.com/</code>, stop and verify it with the server maintainer. The files should have published SHA-256 hashes before being treated as independently verified.
+      </div>
+    </section>
+
+    <section id="install" class="section">
+      <div class="section-head">
+        <h2>Installation instructions</h2>
+        <p>Choose the section that matches your situation.</p>
+      </div>
+      <div class="grid">
+        <article class="card">
+          <h3>Already played on this server?</h3>
+          <div class="steps">
+            <div class="step"><div><h3>Close the game and launcher</h3><p>Make sure The Mighty Quest for Epic Loot and its launcher are fully closed.</p></div></div>
+            <div class="step"><div><h3>Open the Steam install folder</h3><p>In Steam, right-click <em>The Mighty Quest For Epic Loot</em>, then choose <strong>Manage → Browse local files</strong>. Open the <code>Launcher</code> folder.</p></div></div>
+            <div class="step"><div><h3>Replace the settings file</h3><p>Download <code>PublicLauncherSettings.json</code> above and place it in the <code>Launcher</code> folder. Choose <strong>Replace the file in the destination</strong> when Windows asks.</p></div></div>
+            <div class="step"><div><h3>Start the game through Steam</h3><p>Launch the game from Steam. Your Steam ID should log you in automatically. Do not enter a password into an unexpected login form.</p></div></div>
+          </div>
+          <div class="notice" style="margin-top:16px"><strong>Maintenance screen?</strong> Check that the new settings file is still in the <code>Launcher</code> folder. A Steam update or “Verify integrity of game files” can restore the old file. Try again with your VPN off. If you see a name/password form instead of automatic Steam login, stop and contact the server maintainer.</div>
+        </article>
+
+        <article class="card">
+          <h3>Installing for the first time?</h3>
+          <div class="steps">
+            <div class="step"><div><h3>Install the original game</h3><p>Install <em>The Mighty Quest For Epic Loot</em> from Steam, then use <strong>Manage → Browse local files</strong> to open its installation folder.</p></div></div>
+            <div class="step"><div><h3>Install the launcher executable</h3><p>Put <code>PublicLauncher.exe</code> inside the game's <code>Launcher</code> folder.</p></div></div>
+            <div class="step"><div><h3>Install the patch script</h3><p>Put <code>steam-launcher-patch.cmd</code> in the main game folder, beside the game's other top-level files. Use the complete file from this website; do not recreate it from a partial code snippet.</p></div></div>
+            <div class="step"><div><h3>Apply the launcher patch</h3><p>Run <code>steam-launcher-patch.cmd</code> from the game folder, then make sure the current <code>PublicLauncherSettings.json</code> is in the <code>Launcher</code> folder. Start the game from Steam.</p></div></div>
+          </div>
+          <div style="margin-top:16px">
+            <div class="small">Launcher executable and settings file go here:</div>
+            <div class="path-box"><span class="path">C:\Program Files (x86)\Steam\steamapps\common\The Mighty Quest For Epic Loot\Launcher</span><button class="copy" type="button" data-copy="C:\Program Files (x86)\Steam\steamapps\common\The Mighty Quest For Epic Loot\Launcher">Copy path</button></div>
+            <div class="small" style="margin-top:12px">The patch script goes here:</div>
+            <div class="path-box"><span class="path">C:\Program Files (x86)\Steam\steamapps\common\The Mighty Quest For Epic Loot</span><button class="copy" type="button" data-copy="C:\Program Files (x86)\Steam\steamapps\common\The Mighty Quest For Epic Loot">Copy path</button></div>
+          </div>
+          <p class="small" style="margin-top:14px">Steam may be installed in a different library location on your PC. The folders above are the default example.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="updates" class="section">
+      <div class="section-head">
+        <h2>Current gameplay update</h2>
+        <p>The latest bling changes are applied automatically through the updated launcher.</p>
+      </div>
+      <div class="patch-notes">
+        <div class="stat"><div class="big">50 · 100 · 150…</div><p>Bosses drop progressively larger bling rewards to support a more linear progression through the game.</p></div>
+        <div class="stat"><div class="big">No cap</div><p>The bling storage limit has been removed, so accumulated rewards are not cut off by a capacity limit.</p></div>
+        <div class="stat"><div class="big">0% for now</div><p>Bling can be supported on creature drops, but the creature drop rate is currently set to zero.</p></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>Common questions</h2>
+      </div>
+      <details>
+        <summary>Steam replaced my settings file. What should I do?</summary>
+        <p>Download the current settings file from this page and replace the copy in the game's <code>Launcher</code> folder again. Steam updates and file verification can restore the original launcher settings.</p>
+      </details>
+      <details>
+        <summary>The game asks me for a username and password. Should I sign in?</summary>
+        <p>No. The expected flow is automatic login using your Steam ID. Close the game and contact the server maintainer rather than entering credentials into an unexpected form.</p>
+      </details>
+      <details>
+        <summary>Windows warns me about a downloaded file.</summary>
+        <p>Do not bypass security warnings just because an instruction says to. Verify that you are on the official HTTPS domain and check the file's published SHA-256 hash. If no hash is published, ask the maintainer to provide one before running the file.</p>
+      </details>
+      <details>
+        <summary>Is this an official Ubisoft service?</summary>
+        <p>No. This is a community-run revival project and is not affiliated with or endorsed by Ubisoft.</p>
+      </details>
+    </section>
+
+    <section class="section">
+      <div class="notice">
+        <strong>Connection note for players:</strong> The current launcher settings supplied for this server still use HTTP for some launcher and patcher endpoints. This website being HTTPS does not encrypt those separate connections. The server operator should move all launcher and patcher endpoints behind HTTPS before describing the complete update process as end-to-end secure.
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap foot-inner">
+      <span>© The Mighty Quest Reborn community project</span>
+      <span>Not affiliated with Ubisoft or the original game's publisher.</span>
+    </div>
+  </footer>
+
+  <script>
+    // These values reproduce the server settings supplied by the project maintainer.
+    const launcherSettings = {
+      "LauncherWebSiteUrl": "http://15.204.122.247:8081/launcher/",
+      "GameServerUrl": "https://15.204.122.247:8443",
+      "PatcherServiceUrl": "http://15.204.122.247:8081/patcher",
+      "BackgroundImageUrl": "http://15.204.122.247:8081/launcher/background.png",
+      "MaintenanceModeVerificationUrl": "http://15.204.122.247:8081/launcher/maintenance"
+    };
+
+    document.getElementById("download-settings").addEventListener("click", () => {
+      const blob = new Blob([JSON.stringify(launcherSettings, null, 2) + "\n"], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "PublicLauncherSettings.json";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    });
+
+    async function copyText(value, button) {
+      try {
+        await navigator.clipboard.writeText(value);
+        const old = button.textContent;
+        button.textContent = "Copied";
+        setTimeout(() => button.textContent = old, 1400);
+      } catch (err) {
+        window.prompt("Copy this folder path:", value);
+      }
+    }
+    document.querySelectorAll("[data-copy]").forEach(button => {
+      button.addEventListener("click", () => copyText(button.dataset.copy, button));
+    });
+  </script>
+</body>
+</html>
